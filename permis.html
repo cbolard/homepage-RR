@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Obtiens ton permis de conduire avec Roule Raoule</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 200px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- JS -->
+    <script src="script.js"></script>
+    <!-- SWIPER -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style-permis.css">
+
+
+    <!-- From Local -->
+    <script src="cookiealert.js"></script>
+    <!-- From CDN -->
+    <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand ml-2" href="https://www.rouleraoule.fr"> <img src="images/logo-top.png" width="170"
+                    class="d-inline-block align-top" alt="Roule Raoule">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+
+                <!-- <i class="fas fa-bars"></i> -->
+                <div class="menu-btn">
+                    <div class="menu-btn__burger"></div>
+                </div>
+
+                <script>
+
+                    const menuBtn = document.querySelector('.menu-btn');
+                    let menuOpen = false;
+                    menuBtn.addEventListener('click', () => {
+                        if (!menuOpen) {
+                            menuBtn.classList.add('open');
+                            menuOpen = true;
+                        } else {
+                            menuBtn.classList.remove('open');
+                            menuOpen = false;
+                        }
+                    });
+                </script>
+
+
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav h-100 ml-auto p-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://aide.rouleraoule.fr/fr/">Besoin d'aide ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.rouleraoule.fr/code.html">Code de la route</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.rouleraoule.fr/permis.html">Permis de conduire</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a id="button-nav" class="btn" href="https://monespace.rouleraoule.fr/login">Connexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </div>
+
+
+
+    <!-- Sticky-bottom -->
+    <div class="alert alert-dismissible text-center cookiealert" role="alert">
+        <div class="cookiealert-container">
+            <b>Avec Roule Roaule, tu peux financer ton permis jusqu'à 100% avec ton CPF !</b> 🚗
+
+            <a class="acceptcookies" aria-label="Close" style="cursor: pointer;">
+                <U>Fermer</U>
+            </a>
+            <a id="button-bar" class="btn btn-md" style="text-decoration: none; width:auto"
+                href="https://aide.rouleraoule.fr/fr/article/passe-le-permis-avec-roule-raoule-par-ton-cpf-1tikvvt/">
+                En savoir plus sur le CPF
+            </a>
+
+        </div>
+    </div>
+    <script>
+
+        (function () {
+            "use strict";
+
+            var cookieAlert = document.querySelector(".cookiealert");
+            var acceptCookies = document.querySelector(".acceptcookies");
+
+            if (!cookieAlert) {
+                return;
+            }
+
+            cookieAlert.offsetHeight; // Force browser to trigger reflow (https://stackoverflow.com/a/39451131)
+
+            // Show the alert if we cant find the "acceptCookies" cookie
+
+            cookieAlert.classList.add("show");
+
+
+            // When clicking on the agree button, create a 1 year
+            // cookie to remember user's choice and close the banner
+            acceptCookies.addEventListener("click", function () {
+                setCookie("acceptCookies", true, 365);
+                cookieAlert.classList.remove("show");
+
+                // dispatch the accept event
+                window.dispatchEvent(new Event("cookieAlertAccept"))
+            });
+
+            // Cookie functions from w3schools
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+        })();
+    </script>
+
+
+
+
+    <!-- Commercial -->
+    <section id=commercial-section>
+
+
+
+        <div class="container" id=commercial-container>
+
+            <a href="https://www.rouleraoule.fr/permis.html" style="text-decoration: none;">
+                <div class="circular--square">
+                    <br><br>
+                    <h3 style="text-align: center; color: #fff;"> J'obtiens mon<br></h3>
+                    <h3 style="text-align: center;color: #fff;"><strong> Permis de conduire</strong>
+                    </h3>
+                    <h3 style="text-align: center; color: #fff;">en moins de 2 mois</h3>
+                    <h3 style="text-align: center; color: #fff;">pour 749€ !</h3>
+                </div>
+            </a>
+            <!-- 
+            <div id="btn-avis" style="    text-align: center;
+            vertical-align: middle;">
+                <a href="https://fr.trustpilot.com/review/rouleraoule.fr?utm_medium=trustbox&utm_source=Carousel"
+                    id="button-inscription">Je m'inscris gratuitement</a>
+            </div> -->
+
+
+
+        </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Les ofrres annexe -->
+    <section id=offres-annexes>
+
+        <div id="section-offres">
+            <div id="bg-rr">
+                <div class=bg-opacity>
+                    <div class="container" id="table-offres">
+                        <div class=carte-offre>
+
+                            <h3><strong>Le Code de la route en
+                                    illimité </strong>
+                            </h3>
+                            <ul>
+                                <li>Où vous voulez, quand vous voulez</li>
+                                <li>Conforme à l'examen 2020</li>
+                                <li>Plus de 2000 questions</li>
+                            </ul>
+                            <div id="btn-avis">
+                                <a href="#" id="button-offres">Je veux juste le code</a>
+                            </div>
+                        </div>
+
+
+
+                        <div class=carte-offre>
+
+                            <h3><strong>Moniteurs expérimentés</strong> <br>
+                            </h3>
+                            <ul>
+                                <li>Disponibles 7/7 de 7h à 23h</li>
+                                <li>Moniteurs expérimentés</li>
+                                <li>En fonction de tes besoins</li>
+                            </ul>
+                            <div id="btn-avis">
+                                <a href="https://fr.trustpilot.com/review/rouleraoule.fr?utm_medium=trustbox&utm_source=Carousel"
+                                    id="button-offres">Je veux des heures à la carte</a>
+                            </div>
+                        </div>
+
+                        <div class=carte-offre>
+                            <h3><strong>Pédagogie Roule Raoule</strong> </h3>
+                            <ul>
+                                <li>Des leçons vidéos uniques sur Youtube </li>
+                                <li>Livret pédagogique</li>
+                                <li>Suivi de votre progression en ligne </li>
+                                <li>Accompagnement personnalisé</li>
+                            </ul>
+
+                        </div>
+
+
+
+                        <div class=carte-offre>
+                            <p style="font-size: 23px; color: #38454c;">
+                            </p>
+                            <ul>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+
+
+
+    <!-- ARTICLES -->
+    <section id="article">
+        <h2 class="centrer"> Grâce à nos outils en ligne, <strong> progresse rapidement ! </strong>
+            </strong>
+        </h2><br>
+        <div class="container">
+            <div class="cards">
+                <article class="card" id="card-article">
+                    <header>
+                        <img src="/roule-raoule/new-site/images/permis1.png">
+                    </header>
+
+                    <div class="content">
+                        <h3><strong>Une e-plateforme</strong></h3>
+                        <ul>
+                            <li>Une plateforme e-learning en illimité pour simplifier ton apprentissage</li>
+                            <li>Accessible depuis ta plateforme 24/24h, 7/7j </li>
+                            <!-- <button href="#" class="btn btn-article"> En savoir plus <i class="fa fa-long-arrow-right arrow1"
+                            aria-hidden="true"></i></button> -->
+                        </ul>
+                    </div>
+
+                </article>
+
+
+                <article class="card" id="card-article">
+                    <header>
+                        <img src="/roule-raoule/new-site/images/permis2.png">
+                    </header>
+
+                    <div class="content">
+                        <h3><strong>Un agenda en ligne</strong></h3>
+                        <ul>
+                            <li>Pour une liberté et une flexibilité inégalées.</li>
+                            <li>Planifie, confirme, modifie tes heures de conduite</li>
+                            <!-- <button href="#" class="btn btn-article"> En savoir plus <i class="fa fa-long-arrow-right arrow1"
+                            aria-hidden="true"></i></button> -->
+                        </ul>
+                    </div>
+
+                </article>
+                <article class="card" id="card-article">
+                    <header>
+                        <img src="/roule-raoule/new-site/images/permis3.png">
+                    </header>
+
+                    <div class="content">
+                        <h3><strong>Plus de 60 fiches de compétences</strong></h3>
+                        <ul>
+                            <li>Avec des vidéos explicatives </li>
+                            <li>Contenu conforme à l'épreuve </li>
+                            <li>En illimité partout où vous êtes </li>
+                            <!-- <button href="#" class="btn btn-article"> En savoir plus <i class="fa fa-long-arrow-right arrow1"
+                            aria-hidden="true"></i></button> -->
+                        </ul>
+                    </div>
+
+                </article>
+            </div>
+            <h3><strong>Obtiens ton permis avec Roule Raoule !</strong></h3>
+            <br>
+            <div id="btn-avis" style="    text-align: center;
+        vertical-align: middle;">
+
+                <a href="https://fr.trustpilot.com/review/rouleraoule.fr?utm_medium=trustbox&utm_source=Carousel"
+                    id="button-inscription">Je m'inscris gratuitement</a>
+            </div>
+        </div>
+
+    </section>
+    <!-- FIN ARTICLES -->
+
+
+    <!-- Mapbox -->
+    <div class="h2-faq">
+        <div class="container">
+            <h2 class="centrer">Nos points de rendez-vous !
+            </h2>
+            <h4 class="centrer"> Nous sommes actifs dans la France entière!</h4>
+        </div>
+    </div>
+
+    <section id="mapbox">
+        <div class="container">
+            <div class="card" id="mapbox-card">
+                <iframe
+                    src='https://api.mapbox.com/styles/v1/cbolard/ckfe0h40warcj19nuzjctxxc0.html?fresh=true&title=false&access_token=pk.eyJ1IjoiY2JvbGFyZCIsImEiOiJja2ZlMGJnOTMwMGFsMnRxdm9yaXVld21kIn0.t0cEgh49IXDqAg7sJbLNKA'
+                    width='100%' height='400px'>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Avis -->
+
+    <section class="avis">
+        <div id="container-avis" class="container">
+            <div class="item">
+                <div id="avis-partie-gauche">
+                    <p style="font-size: 36px; color: #38454c;"><strong> 4,7/5</strong> sur Trustpilot !</p>
+
+                    <img class="fit-picture mb-3"
+                        src="https://sat-serrurerie.fr/wp-content/themes/satserrurerie/images/etoiles.png" width="200"
+                        height="auto">
+                    <br>
+                    <p>Note établie selon <strong> 96 avis </strong>de nos élèves sur Trustpilot !</p>
+                    <br>
+
+                    <div id="btn-avis">
+                        <a href="https://fr.trustpilot.com/review/rouleraoule.fr?utm_medium=trustbox&utm_source=Carousel"
+                            class="btn" id="button-avis">Voir tout nos
+                            avis</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="item" id="avis-personna">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <p style="font-size: 23px; color: #38454c;">Moniteur à<strong> l'écoute et
+                                    pédagogue</strong></p>
+
+                            <p style="font-size: 16px;">
+                                "Moniteur à l'écoute et pédagogue ! Le plus ce sont les vidéos YouTube qui permettent
+                                d'évoluer et de comprendre facilement ! j'ai obtenu mon permis en quelques mois
+                                seulement après mon code. Je recommande vraiment cette auto école !" <br><br>
+                                <strong>
+                                    Elodie Schweitzer </strong>
+
+                                <img class="fit-picture"
+                                    src="https://sat-serrurerie.fr/wp-content/themes/satserrurerie/images/etoiles.png"
+                                    width="80" height="auto">
+                            </p>
+                        </div>
+                        <div class="carousel-item">
+                            <p style="font-size: 23px; color: #38454c;">C’était<strong> vraiment super</strong></p>
+
+                            <p style="font-size: 16px;">
+                                "C’était vraiment super, j’étais en confiance tout au long du cours , ce qui n’est pas
+                                mon habitude, Je vous conseille fortement la monitrice Houria qui est très chaleureuse
+                                et très agréable, vous ne serez vraiment pas déçu !" <br><br>
+                                <strong>
+                                    Sokona Traore </strong>
+
+                                <img class="fit-picture"
+                                    src="https://sat-serrurerie.fr/wp-content/themes/satserrurerie/images/etoiles.png"
+                                    width="80" height="auto">
+                            </p>
+                        </div>
+                        <div class="carousel-item">
+                            <p style="font-size: 23px; color: #38454c;">J’ai effectué <strong>mon heure
+                                    d'évaluation</strong></p>
+
+                            <p style="font-size: 16px;">
+                                "J'ai effectué mon heure d'évaluation avec roule raoule alors comment vous dire c'était
+                                un plaisir monitrice a l'heure très clair sans parle de l'accueil téléphonique vraiment
+                                des personnes professionnelles et gentille !" <br><br>
+                                <strong>
+                                    Safiya</strong>
+
+                                <img class="fit-picture"
+                                    src="https://sat-serrurerie.fr/wp-content/themes/satserrurerie/images/etoiles.png"
+                                    width="80" height="auto">
+                            </p>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+
+                    </a>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 2nd CTA Commercial -->
+
+    <section id=commercial-section>
+
+
+        <div id="bg-rr">
+            <div class=bg-opacity>
+                <div class="container" id=commercial-container-cta>
+
+                    <a href="https://www.rouleraoule.fr/code.html" style="text-decoration: none;">
+
+                        <div class="circular--square-code-cta">
+                            <div class="text-center" style="color:#fff; font-size: 22px;">J'obtiens mon</div>
+                            <div class="text-center" style="color:#fff; font-size: 22px;"> <strong>Code de la route
+                                </strong></div>
+                            <div class="text-center" style="color:#fff; font-size: 22px;">pour 39€</div>
+
+                        </div>
+                    </a>
+
+                    <a href="https://www.rouleraoule.fr/carte.html" style="text-decoration: none;">
+
+
+                        <div class="circular--square-heure-cta">
+
+                            <div class="text-center" style="color:#fff; font-size: 22px;">Je prends des</div>
+                            <div class="text-center" style="color:#fff; font-size: 22px;"> <strong>Heures à la carte
+                                </strong></div>
+
+                            <div class="text-center" style="color:#fff; font-size: 22px;">dès 36,90€</div>
+
+                        </div>
+                    </a>
+
+
+                    <a href="https://www.rouleraoule.fr/permis.html" style="text-decoration: none;">
+
+
+                        <div class="circular--square-permis-cta">
+                            <div class="text-center" style="color:#fff; font-size: 22px;">J'obtiens mon</div>
+
+                            <div class="text-center" style="color:#fff; font-size: 22px;"> <strong>Permis de conduire
+                                </strong></div>
+
+                            <div class="text-center" style="color:#fff; font-size: 22px;">pour 749€</div>
+
+                        </div>
+                    </a>
+
+                    <div class="heures-carte">
+                        <div class="container" style="text-align: center;font-size:20px; grid-column: 2 / -1;">
+
+                            <p style="font-size: 14px; font-style: italic; color:#000" class="mt-2"> <strong>Tu peux
+                                    même
+                                    faire financer
+                                    ton permis de
+                                    conduire grâce
+                                    à
+                                    ton Compte
+                                    Personnel de Formation (CPF) ! </strong>
+                                <a href="https://aide.rouleraoule.fr/fr/article/passe-le-permis-avec-roule-raoule-par-ton-cpf-1tikvvt/"
+                                    style="font-size: 14px; color: #2BC444; font-style: normal;">Plus
+                                    d'infos</a> </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+
+    <!-- TEST -->
+
+
+
+
+    <!-- Footer -->
+    <section id="footer">
+        <footer class="page-footer font-small blue ">
+            <div class="upperFooter content">
+                <div class="container">
+                    <nav class="footerLinks">
+                        <a href="#" style="color: #fff; font-size: 15px;">L’examen</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Les démarches</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Réussir ton permis</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Pédagogie Roule Raoule</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Types de permis</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Autour de la moto</a> |
+                        <a href="#" style="color: #fff; font-size: 15px;">Autour de la voiture</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="container pt-2">
+                <div id="container-footer">
+
+                    <div class="box1">
+                        <a class="navbar-brand ml-2" href="https://www.rouleraoule.fr"> <img src="images/logo Blanc.png"
+                                width="200" class="d-inline-block align-top" alt="Roule Raoule">
+                        </a> <br>
+
+                        <p style="vertical-align:baseline; color:#fff; font-weight: bold; margin-top: 5px;"></p>
+                        <img class="fit-picture mb-3"
+                            src="https://sat-serrurerie.fr/wp-content/themes/satserrurerie/images/etoiles.png"
+                            width="100" height="auto">
+                        4,7/5 sur
+                        Trustpilot</p>
+
+
+                    </div>
+
+
+                    <div class="box2">
+                        <h5 class="mb-3" style="color:#fff; font-weight: bold; font-size:19px ;"> Nos forfaits</h5>
+
+                        <ul class="list-unstyled">
+
+                            <li class="li-footer">
+                                <a href="https://www.rouleraoule.fr/code.html">Code de la route
+                                </a>
+                            </li>
+                            <li class="li-footer">
+                                <a href="https://www.rouleraoule.fr/permis.html">Permis de conduire
+                                </a>
+                            </li>
+
+
+                            <li class="li-footer">
+                                <a href="https://www.rouleraoule.fr/carte.html">Heures à la carte</a>
+                            </li>
+
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <div class="box3">
+
+
+                        <h5 class="mb-3" style="color:#fff; font-weight: bold; font-size:19px ;">Suivez-nous !</h5>
+
+                        <ul class="list-unstyled">
+                            <li class="li-footer">
+                                <a href="https://www.youtube.com/channel/UCsiPBYSEK_eTXOrRROmg0TA"><i
+                                        class="fab fa-youtube"></i> Youtube</a>
+                            </li>
+                            <li class="li-footer">
+                                <a href="https://www.facebook.com/rouleraouleparis"><i class="fab fa-facebook"></i>
+                                    Facebook</a>
+                            </li>
+                            <li class="li-footer">
+                                <a href="https://www.instagram.com/roule_raoule/?hl=fr"> <i
+                                        class="fab fa-instagram"></i> Instagram</a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="box4">
+
+                        <h5 class="mb-3" style="color:#fff; font-weight: bold; font-size:19px ;">En savoir plus</h5>
+                        <ul class="list-unstyled">
+                            <li class="li-footer">
+                                <a href="#!" data-toggle="modal" data-target="#qsn">Qui sommes nous ?
+                                </a>
+                            </li>
+                            <li class="li-footer">
+                                <a href="https://aide.rouleraoule.fr/fr/">FAQ
+                                </a>
+                            </li>
+
+                            <li class="li-footer">
+                                <a href="#!"> Nos partenaires</a>
+                            </li>
+
+                            <li class="li-footer">
+                                <a href="https://www.rouleraoule.fr/moniteur.html" target="_blank">Carrière
+                                    moniteur <button id="button-footer" class="btn">On recrute ✌️</button>
+                                </a>
+                            </li>
+                            <li class="li-footer">
+                                <a href="#!" data-toggle="modal" data-target="#cc">
+                                    Charte de confidentialité
+                                </a>
+                            </li>
+
+                            <li class="li-footer">
+                                <a href="#!" data-toggle="modal" data-target="#ml">Mentions légales
+                                </a>
+                            </li>
+
+
+                            <li class="li-footer">
+                                <a href="#!" data-toggle="modal" data-target="#cgu">CGU / CGV</a>
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+
+                </div>
+                <hr>
+
+
+                <div class="footer-copyright text-center py-3 mr-5 ml-5">Roule Raoule Auto-Ecole RCS Evry 830 462 859- 3
+                    rue
+                    Jules Guesde
+                    91130 Ris-orangis - Agrément n°E1909100160 - +33183817171 - Liste des médiateurs - TVA
+                    Intracommunautaire
+                    FR43830462859 - ola@rouleraoule.fr
+                    © Copyright 2020 Roule Raoule
+                </div>
+
+                <!-- Qui sommes nous ? -->
+                <div class="modal fade" id="qsn">
+                    <div class="modal-dialog modal-lg">
+
+                        <div class="modal-content">
+
+                            <div class="text-center pt-3">
+                                <span class="h1 bleu"><i class="icon-question"></i> Qui sommes nous ?</span>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row mb-4">
+                                    <div class="col-md-10">
+                                        Être détenteur du permis de conduire est un enjeu majeur pour quiconque souhaite
+                                        accéder au marché du travail aujourd’hui.<br />
+
+                                        C’est devenu tellement important que la plupart des employeurs demandent
+                                        l’obtention du permis de conduire pour obtenir le poste tant convoité.<br />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img src="images/icon-driver.png" class="img-fluid" alt="Roule Raoule">
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        Cependant l’apprentissage de la conduite automobile n’est pas de tout
+                                        repos.<br />
+                                        Et pour réaliser votre trajet automobile en toute sécurité vous pouvez compter
+                                        sur Roule Raoule pour votre apprentissage.<br />
+
+                                        Nous proposons à nos clients désireux de changer leur mobilité, une auto-école
+                                        qui leur ressemble. Digitale, facile d’accès, riche en contenu pour les aider
+                                        dans leur apprentissage, mais surtout pas cher!<br />
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-2">
+                                        <img src="images/icon-mobile.png" class="img-fluid" alt="Roule Raoule">
+                                    </div>
+                                    <div class="col-md-10">
+                                        Roule Raoule met à disposition, de ses enseignants et de ses élèves, des outils
+                                        digitaux de pointe pour organiser leur leçons de conduite mais aussi apprendre
+                                        avec des méthodes qui ont fait leur preuves.<br />
+
+                                        Parce que nous croyons en l’apprentissage et à la transmission des valeurs
+                                        universelles qui y sont rattachées. A savoir: l’empathie, la bienveillance, la
+                                        patience, la performance et l’humour! Enfin pour l’humour on fait de notre
+                                        mieux…<br />
+                                    </div>
+                                </div>
+                                <span class="h3">Roule raoule souhaite apporter sa contribution afin de:</span>
+                                <ul>
+                                    <li><i class="icon-puce green"></i> Pouvoir aider des gens à comprendre et
+                                        progresser dans l’apprentissage de la conduite automobile.</li>
+                                    <li><i class="icon-puce green"></i> Pouvoir changer le regard du public sur le
+                                        métier de l’enseignement de la conduite.</li>
+                                </ul>
+                                <span class="font-weight-bold">Roule Raoule, un boulevard vers la réussite!</span>
+
+                                <div class="col-12 pt-4 text-center">
+                                    <img src="images/illustration-cool.png" class="img-fluid" alt="Roule Raoule">
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CGU -->
+                <div class="modal fade" id="cgu">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <span class="h1 modal-title">Conditions Générales d'Utilisation</span>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <p class="text-justify">
+                                    Il est préalablement précisé que les présentes conditions régissent exclusivement
+                                    les souscriptions sur le site Internet www.rouleraoule.fr ci-après dénommé « Le Site
+                                    », étant précisé que les services d’apprentissage sont réservés aux particuliers
+                                    inscrits sur le Site, ci-après dénommés « Les Clients » (les élèves).
+                                    <br />
+                                    <br /> L’inscription au site Internet www.rouleraoule.fr ainsi que la validation de
+                                    la souscription proposée impliquent l’acceptation expresse de la part des élèves des
+                                    présentes Conditions Générales sans que cette acceptation nécessite leur signature
+                                    manuscrite.
+                                    <br />
+                                    <br /> Le non-respect par un élève de ses obligations au titre des présentes
+                                    Conditions Générales pourra entraîner la suspension, voire la résiliation, de son
+                                    contrat sans préjudice de tous dommages et intérêts que pourrait solliciter la
+                                    société.
+                                    <br />
+                                    <br /> Il en sera ainsi notamment dans l’hypothèse où l’élève se livrerait à des
+                                    insultes, intimidations, menaces envers l’enseignant ou le secrétariat ou tout autre
+                                    personnel intervenant au nom de Roule Raoule.
+                                    <br />
+                                    <br /> La résiliation sera également prononcée en cas de retards répétés de l’élève
+                                    ou d’impossibilité pour l’enseignant de délivrer un cours dans des conditions
+                                    normales de sécurité et de respect pour son travail.
+                                    <br />
+                                    <br /> Les conditions générales d'utilisation établies dans le respect des Articles
+                                    R211-3 à R211-6 du Code de la Route, de l’arrêté du 16 juillet 2013 relatif à
+                                    l’apprentissage de la conduite des véhicules à moteur de la catégorie B du permis de
+                                    conduire à titre onéreux et de l’arrêté du 29 juillet 2013 relatif au livret
+                                    d’apprentissage de la catégorie B du permis de conduire. Les conditions générales
+                                    d'utilisation ont pour objet d’établir les conditions et les modalités de
+                                    l’enseignement théorique et pratique, de la conduite des véhicules à moteur de la
+                                    catégorie B et de la sécurité routière, tel que délivré à l’élève au moyen des
+                                    services mis à sa disposition par Roule Raoule.
+                                </p>
+                                <p class="h3">Article 1 – Société</p>
+                                <p class="text-justify">
+                                    Le Site www.rouleraoule.fr est édité et exploité par la société Raoule Formations,
+                                    au capital de 500 €, dont le siège social est situé 3 rue Jules Guesdes – 91130
+                                    Ris-Orangis, immatriculée au RCS d’Evry sous le n° 830 462 859, n° de TVA
+                                    FR43830462859.
+                                    <br />
+                                    <br /> Hébergement :
+                                    <br /> OVH, SAS au capital de 100 690 20 € dont le siège social est situé 2 rue
+                                    Kellermann, immatriculée au RCS de Lille sous le n° 424 761 419 00045, n° de TVA FR
+                                    22424761419.
+                                    <br /> Le Client (souscripteur /élève) peut s’adresser à notre Service :
+                                <ol class="circle">
+                                    <li>Sur le Site www.rouleraoule.fr en envoyant un e-mail via le formulaire contact
+                                        ou à l’adresse ola@rouleraoule.fr ;</li>
+                                    <li>Par téléphone depuis la France 01 83 81 71 71 (numéro non surtaxé au prix d’un
+                                        appel local en France Métropolitaine).</li>
+                                </ol>
+                                Des Conseillers sont à votre disposition du lundi au vendredi de 9 heures à 12 heures et
+                                de 14 heures à 19 heures et le samedi de 9 heures à 12 heures.
+                                </p>
+                                <p class="h3">Article 2 – Formation permis de conduire</p>
+                                <p class="text-justify">
+                                    Les formations au permis de conduire sont l’ensemble des cours théoriques et
+                                    pratiques proposés à la souscription par Roule Raoule sur son Site Internet
+                                    www.rouleraoule.fr.
+                                    <br />
+                                    <br /> Les formations proposées par Roule Raoule sont conformes à la législation
+                                    française en vigueur en France.
+                                    <br />
+                                    <br /> Les Enseignants sont tous titulaires du diplôme d’enseignant de la conduite
+                                    et de la sécurité routière ainsi que de l’autorisation administrative d’enseigner en
+                                    cours de validité.
+                                    <br />
+                                    <br /> L’Enseignant est propriétaire ou locataire du véhicule qu’il utilise
+                                    spécifiquement adapté pour l’enseignement de la conduite.
+                                    <br />
+                                    <br /> L’Enseignant a directement souscrit les assurances du fait de l’exercice de
+                                    son activité professionnelle et de l’utilisation du véhicule. A ce titre, Roule
+                                    Raoule apporte son concours à la mise en relation entre l’élève et l’enseignant.
+                                </p>
+                                <p class="h3">Article 3 – Prix</p>
+                                <p class="h4">3.1 Généralités</p>
+                                <p class="text-justify">
+                                    Les prix de nos services d’apprentissage sont mentionnés en euros toutes taxes
+                                    comprises (dont éco participation) hors participation aux frais de l’examen du Code
+                                    dont le montant facturé en supplément sera indiqué à l’élève lors de la validation
+                                    définitive de la souscription.
+                                    <br />
+                                    <br /> Roule Raoule se réserve le droit de modifier ses prix à tout moment mais les
+                                    services d’apprentissage seront facturés sur la base des tarifs en vigueur au moment
+                                    de l’enregistrement des souscriptions.
+                                    <br />
+                                    <br /> Par ailleurs, Roule Raoule se réserve le droit de modifier les frais de
+                                    participation en fonction de l’évolution des dispositions réglementaires
+                                    d’inscription au permis.
+                                </p>
+                                <p class="h3">Article 4 – Disponibilite</p>
+                                <p class="text-justify">
+                                    Les offres de formation ainsi que les prix des services d’apprentissage proposés par
+                                    Roule Raoule sur le Site sont valables tant qu’ils sont visibles sur le Site
+                                    www.rouleraoule.fr.
+                                    <br />
+                                    <br /> En cas d’indisponibilité d’une formation après passation de la souscription,
+                                    l’élève sera informé par e-mail ou par téléphone de l’annulation de sa commande.
+                                    <br />
+                                    <br /> L’élève sera alors remboursé de tout ou partie de sa commande dans un délai
+                                    maximum de quatorze (14) jours après avoir été averti de l’annulation de sa
+                                    souscription. Tout remboursement s’effectuera en fonction des moyens de paiement
+                                    utilisés par l’élève lors de sa souscription (carte bancaire).
+                                </p>
+                                <p class="h3">Article 5 – Modalites de commande</p>
+                                <p class="text-justify">
+                                    L’élève déclare avoir pris connaissance et accepté les présentes conditions
+                                    générales d'utilisation avant la passation de sa souscription.
+                                    <br />
+                                    <br /> Conformément aux dispositions de l’Article L 121-11 du Code de la
+                                    Consommation, Roule Raoule a la faculté d’annuler ou refuser la souscription d’un
+                                    élève pour motif légitime, notamment en cas d’anomalie sur le bon de souscription,
+                                    comportement anormal et /ou mauvaise foi de l’élève, refus de paiement, retard de
+                                    paiement pour des souscriptions précédentes, existence d’un litige relatif au
+                                    paiement d’une souscription antérieure, utilisation frauduleuse du Site ou encore,
+                                    incivilités à l’encontre des collaborateurs de la société Roule Raoule.
+                                    <br />
+                                    <br /> Roule Raoule se réserve aussi le droit de prendre toutes mesures utiles afin
+                                    de faire cesser de telles irrégularités, à savoir la suspension de l’accès au site
+                                    ou l’exclusion de l’élève.
+                                    <br />
+                                    <br /> Conformément aux dispositions du Code Civil sur la conclusion des contrats en
+                                    ligne, le contrat est conclu, lorsque le souscripteur clique sur le bouton lui
+                                    permettant de confirmer sa commande après avoir visualisé le détail de celle-ci et
+                                    en particulier son prix total et avoir eu la possibilité de corriger d’éventuelles
+                                    erreurs.
+                                    <br />
+                                    <br /> Après avoir pris connaissance du détail de sa souscription et une fois que
+                                    l’ensemble des informations demandées aura été complété, l’élève peut cliquer sur «
+                                    Valider et Payer » afin de confirmer définitivement la commande. La validation de la
+                                    commande vaut donc acceptation de ces conditions générales d'utilisation. Sauf
+                                    preuve contraire, les données enregistrées par Roule Raoule constituent la preuve de
+                                    l’ensemble des transactions passées par le souscripteur.
+                                    <br /> Les informations contractuelles sont présentées en langue française et feront
+                                    l’objet d’une confirmation écrite reprenant ces informations contractuelles au plus
+                                    tard au moment du paiement de la formation à laquelle l’élève aura souscrit.
+                                    <br />
+                                    <br /> Roule Raoule s’engage à accepter la souscription de l’élève dans les termes
+                                    des conditions générales d'utilisation. Roule Raoule fera tout son possible pour
+                                    traiter toutes les souscriptions dans un délai de 24 heures.
+                                    <br />
+                                    <br /> Les contrats conclus sur le Site (données relatives à la souscription par
+                                    l’élève et les conditions générales d'utilisation en vigueur au jour de la
+                                    souscription des Membres) sont archivés pour une durée de 10 ans. L’élève peut
+                                    accéder aux contrats archivés en adressant sa demande par mail à l’adresse
+                                    ola@rouleraoule.fr.
+                                    <br />
+                                    <br /> Si un souscripteur souhaite exercer son droit de rétractation, il est invité
+                                    à en informer le support dans le délai de quatorze (14) jours à compter de la
+                                    réception de l’acceptation de son inscription par mail à l’adresse suivante
+                                    ola@rouleraoule.fr.
+                                    <br />
+                                    <br /> L’élève sera alors remboursé de tout ou partie de sa commande dans un délai
+                                    maximum de quatorze (14) jours après avoir été averti de l’annulation de sa
+                                    souscription. Tout remboursement s’effectuera en fonction des moyens de paiement
+                                    utilisés par l’élève lors de sa souscription (carte bancaire).
+                                    <br />
+                                    <br /> Pour souscrire à l’apprentissage à la conduite d’un véhicule à moteur sur une
+                                    voie ouverte à la circulation publique en vue de l’obtention du permis de conduire,
+                                    il faut :
+                                <ol type="1">
+                                    <li>Etre âgé(e) de seize ans minimum ;</li>
+                                    <li>Etre détenteur d’un livret d’apprentissage conforme à la réglementation et
+                                        précisant les objectifs et la progressivité de la formation ;</li>
+                                    <li>Etre détenteur du formulaire de la demande de permis de conduire validée par le
+                                        Préfet du département dans lequel cette demande a été déposée et titulaire d’un
+                                        numéro NEPH ;
+                                        <ol class="level2">
+                                            <li>L’élève prend les leçons délivrées par les Enseignants soit en qualité
+                                                de candidat libre, soit en tant que candidat inscrit dans un
+                                                établissement d’enseignement de la conduite agréé autre que Roule
+                                                Raoule. L’élève déjà titulaire du permis de conduire peut également
+                                                prendre des leçons en vue de perfectionner sa technique de conduite ;
+                                            </li>
+                                            <li>Pour la vérification de ses connaissances en matière de Code de la
+                                                Route, l’Elève n’a pas nécessairement besoin d’être inscrit auprès de la
+                                                Préfecture ou d’une Auto-Ecole. Par contre, et bien qu’une foire aux
+                                                questions soit mise en place pour aider l’Elève (candidat libre) dans
+                                                l’obtention de son numéro d’enseignement préfectoral harmonisé (NEPH),
+                                                il est seul responsable de la construction de son dossier et de
+                                                l’obtention de ce numéro sans quoi il ne pourra pas passer les épreuves
+                                                théoriques générales ainsi que les épreuves pratiques du permis de
+                                                conduire.</li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                                </p>
+                                <p class="h3">Article 6 – Paiement</p>
+                                <p class="h4">6.1 Mode de paiement</p>
+                                <p class="text-justify">
+                                    Le paiement s’effectue en ligne par carte bancaire. Les cartes bancaires acceptées
+                                    sont les suivantes Visa – Eurocard/Mastercard et cartes nationales.
+                                </p>
+                                <p class="h4">6.2 Paiement sécurisé</p>
+                                <p class="text-justify">
+                                    Toutes les transactions entre l’élève et Roule Raoule se déroulent dans un strict
+                                    cadre de confidentialité et de cryptage grâce au mode de paiement en ligne «
+                                    Monetico Paiement ».
+                                    <br />
+                                    <br />
+                                    <ins>Mode de paiement en ligne :</ins>
+                                    <br /> Monetico Paiement est un service permettant d’accepter les paiements par
+                                    carte bancaire sur notre site internet. Toutes les données, comme le numéro de
+                                    carte, le cryptogramme visuel ou entre autre la date d’expiration, restent
+                                    confidentielles grâce à un chiffrement TLS Protocole 3D secure pris en charge.
+                                    Certification PCI/DSS pris en charge. Le numéro de la carte bancaire est saisi sur
+                                    une page sécurisée hébergée par la banque. Il n’est donc pas connu du commerçant.
+                                    Les informations sont cryptées (technologie TLS). Cartes acceptées Visa,
+                                    Eurocard/Mastercard et cartes nationales.
+                                    <br />
+                                    <br /> Roule Raoule n’a pas d’accès aux coordonnées bancaires du souscripteur et ne
+                                    les garde pas sur ses serveurs. Par conséquent, elles seront par principe demandées
+                                    aux élèves à nouveau lors d’une nouvelle souscription.
+                                </p>
+                                <p class="h4">6.3 Lutte contre la fraude</p>
+                                <p class="text-justify">
+                                    Roule Raoule fait appel à plusieurs mécanismes dans le cadre de la lutte contre la
+                                    fraude.
+                                <ol type="i">
+                                    <li>Lorsque le souscripteur clique sur le bouton « Valider et payer » lors de la
+                                        finalisation de sa commande, la banque de Roule Raoule vérifie la validité du
+                                        numéro de carte bancaire et s’assure qu’elle ne pas l’objet d’une opposition. Le
+                                        souscripteur est ainsi doublement protégé contre les abus et les fraudes.</li>
+                                    <li>Le Site utilise également un programme appelé 3d sécure ayant pour but de lutter
+                                        contre la fraude. Au moment du paiement en ligne, le souscripteur peut ainsi
+                                        être amené à entrer un code d’activation de la transaction communiqué par sa
+                                        banque en vue de sa finalisation (via une redirection sur le site de sa banque,
+                                        via la réception d’un SMS ou via des questions personnelles type date de
+                                        naissance, code postal …).</li>
+                                    <li>Enfin, par l’intermédiaire de sa plateforme de paiement en ligne (Monetico
+                                        Paiement), Roule Raoule a mis en place un traitement de lutte contre la fraude.
+                                        Ainsi Roule Raoule peut effectuer des contrôles ayant pour but de s’assurer de
+                                        l’exactitude de l’identité et de la domiciliation du Souscripteur.</li>
+
+                                    <li>Dans ce cadre, les vérifications portent sur les informations que le
+                                        souscripteur fournit à Roule Raoule telles que nom, prénom, adresse e-mail, etc
+                                        … ainsi que l’adresse IP utilisée et figurant dans l’historique de ses
+                                        souscriptions et transactions et enfin, sur la carte bancaire utilisée (type,
+                                        pays d’émission et numéros partiels communiqués par les établissements bancaires
+                                        et de paiement, composés uniquement des quatre premiers chiffres et des deux
+                                        derniers ainsi que sa date d’expiration). Le cas échéant, Roule Raoule peut
+                                        demander au souscripteur de lui transmettre par e-mail une copie recto/verso de
+                                        sa pièce d’identité ainsi qu’un justificatif de domicile de moins de trois (3)
+                                        mois. Ces documents ne seront pas conservés au-delà de la durée nécessaire aux
+                                        vérifications.</li>
+
+                                    <li>Roule Raoule se réserve le droit de procéder à l’annulation de la commande
+                                        concernée et au blocage de la souscription si les vérifications menées
+                                        établissent des données inexactes. En cas de non réception des justificatifs
+                                        demandés dans le délai imparti, Roule Raoule annulera la souscription et l’élève
+                                        sera informé(e) de ce qui précède par e-mail.</li>
+
+                                    <li>Le souscripteur sera alors remboursé de tout ou partie de sa commande dans un
+                                        délai maximum de quatorze (14) jours après avoir été averti de l’annulation de
+                                        sa commande. Tout remboursement s’effectuera en fonction des moyens de paiement
+                                        lors de la souscription (carte bancaire).</li>
+
+                                    <li>Dans le cadre de ce traitement Roule Raoule rappelle au souscripteur qu’il
+                                        dispose de l’ensemble des droits listés à l’Article 1.6 de notre politique de
+                                        confidentialité.</li>
+                                </ol>
+                                </p>
+                                <p class="h3">Article 7 – Modalites d’exécution de la prestation</p>
+                                <p class="text-justify">
+                                    <ins>Mode de fonctionnement de la prestation</ins>
+                                    <br /> Avant sa première leçon, l’Elève doit communiquer à Roule Raoule son numéro
+                                    NEPH ou son numéro de permis de conduire (en cours de validité). Une proposition de
+                                    planning de leçons (le « planning » est mise à disposition de l’Elève en fonction
+                                    des informations communiquées par l’Elève et des impératifs d’organisation de Roule
+                                    Raoule.
+                                    <br />
+                                    <br /> Les rendez-vous sont donnés dans la gare la plus proche du lieu de travail de
+                                    l’enseignant. Cf voir la carte <a
+                                        href="https://www.google.com/maps/d/viewer?mid=1PCIrTS9FMAUjK3y_FB8G02cEaPRnS8_t&11=48.80510860172882%2C2.433061500000008&z=10"
+                                        target="_blank">Merci de cliquer</a>. S’il en a la possibilité, l’enseignant
+                                    récupère l’Elève en bas de chez lui si et seulement si les conditions d’accès le
+                                    permettent. Un emplacement de stationnement réglementé pour le stationnement de
+                                    courte durée à minima. L’Elève sera déposé au lieu de domicile ou à la gare la plus
+                                    proche de son domicile. Un seul et même point de rendez-vous sera fixé pour chaque
+                                    forfait pris chez Roule Raoule.
+                                    <br />
+                                    <br /> Il ne pourra être changé sauf si l’Elève déménage dans une zone couverte par
+                                    Roule Raoule. Bien que Roule Raoule fait son maximum pour couvrir tout le territoire
+                                    français (hors dom-tom), en cas de déménagement de l’Elève dans une zone non
+                                    couverte par Roule Raoule aucun remboursement ne sera opéré sur des forfaits déjà en
+                                    vigueur.
+                                    <br />
+                                    <br /> Vous trouverez nos zones couvertes sur une carte interactive disponible sur
+                                    notre Site Internet : <a href="http://www.rouleraoule.fr"
+                                        target="_blank">www.rouleraoule.fr</a>. Cette carte est amenée à évoluer.
+                                    <br /> Roule Raoule s’engage à ce que toutes les zones couvertes le restent pendant
+                                    toute la durée du contrat qui le lie à l’Elève.
+                                    <br />
+                                    <br /> Aux fins de réservation de leçons, l’Elève renseigne son adresse postale, une
+                                    date et une plage horaire et s’il y a lieu, le nom de l’Enseignant avec lequel il
+                                    souhaite prendre la leçon.
+                                    <br />
+                                    <br /> Toute réservation effectuée directement auprès de l’Enseignant est prohibée,
+                                    Roule Raoule décline toute responsabilité en cas de dommage, de litige ou
+                                    d’infraction causés alors que la réservation a été faite en dehors du Site.
+                                    <br /> Roule Raoule propose à l’élève un rendez-vous avec l’Enseignant désigné par
+                                    lui, un Enseignant disponible ou lui permet d’avoir accès selon la zone
+                                    géographique, aux profils des Enseignants et à leurs calendriers afin d’établir une
+                                    réservation personnalisée. La personnalisation du planning permet à l’Elève de
+                                    moduler son apprentissage de la conduite selon plusieurs critères qu’il peut définir
+                                    depuis le Site dont notamment la date, la durée, la fréquence et le lieu de
+                                    rendez-vous avec l’Enseignant.
+                                    <br /> Roule Raoule valide les réservations de l’Elève selon les disponibilités des
+                                    Enseignants et des impératifs d’organisation Roule Raoule. Chaque leçon validée fait
+                                    l’objet d’une notification à l’Elève par courriel et/ou SMS.
+                                    <br /> Roule Raoule se réserve le droit de ne pas valider la réservation pour tout
+                                    motif légitime, notamment dans l’hypothèse où la réservation ne serait pas conforme
+                                    aux conditions générales d'utilisation ou si l’une des précédentes leçons a donné
+                                    lieu à un défaut ou un incident de traitement. Dans ces hypothèses, et sous réserve
+                                    de bonne foi de l’élève, celui-ci peut alors solliciter le remboursement d’un pack
+                                    partiellement consommé, les heures consommées sont alors facturées à l’Elève au
+                                    prorata du montant du pack effectivement consommé.
+                                    <br /> Les heures de conduite prises en trop seront remboursées selon les modalités
+                                    visées à l’Article 5, seulement dans le cas où l’élève se sera présenté à l’examen
+                                    pratique du permis de conduire accompagné d’un moniteur de chez Roule Raoule et
+                                    après avoir communiqué la copie recto/verso de son permis de conduire. A cet effet,
+                                    l’élève disposera d’un an à compter de la date de présentation à l’examen pour
+                                    demander son remboursement. Passé ce délai, plus aucune demande ne sera acceptée.
+                                    <br />
+                                    <br />
+
+                                    <ins>Déclarations et obligations de l’Elève</ins>
+                                    <br />
+                                    <br /> Avant de suivre toute leçon pratique à la conduite de véhicule :
+                                <ol class="circle">
+                                    <li>L’Elève déclare être âgé de 16 ans au moins. Lorsque l’Elève n’est pas majeur,
+                                        il agit sous la responsabilité directe de son représentant légal ;</li>
+
+                                    <li>L’Elève et, s’il y a lieu, son représentant légal, communiquent à Roule Raoule
+                                        une copie numérique de leurs pièces d’identité ;</li>
+
+                                    <li>L’Elève s’engage à remplir les formulaires nécessaires à l’inscription au permis
+                                        de conduire (notamment le formulaire cerfa référence 02 n°14866*01 ou encore, le
+                                        formulaire de recueil complémentaire des données nécessaires à l’édition du
+                                        titre de conduite au format de l’Union Européenne Cerfa n°14948*01) ;</li>
+
+                                    <li>L’Elève déclare avoir demandé à passer l’épreuve d’obtention du permis de
+                                        conduire de la catégorie B en candidat libre par le dépôt effectif de son
+                                        dossier auprès de l’autorité compétente.</li>
+                                </ol>
+                                A ce titre,
+                                <br />
+                                <ol class="circle">
+                                    <li>L’Elève déclare avoir pris tous les renseignements préalables concernant la
+                                        transmission du dossier, selon les départements, soit à la Préfecture, soit à la
+                                        Sous-Préfecture, soit à la Direction Départementale des Territoires (DDT).</li>
+                                </ol>
+
+                                A Paris, le dossier doit être adressé au bureau des permis de conduire de la Préfecture
+                                de Police :
+                                <ol class="circle">
+                                    <li>L’élève reconnaît qu’il est le seul responsable de la transmission des pièces du
+                                        dossier aux autorités et que Roule Raoule n’est pas responsable de l’attribution
+                                        des dates de passage aux examens théorique et pratique, nécessaires à son
+                                        inscription en qualité de candidat libre ainsi que son livret d’apprentissage
+                                        dématérialisé disponible sur le compte électronique de l’Elève (ou envoyé par
+                                        courrier à l’adresse déclarée lors de la souscription) ;</li>
+
+                                    <li>L’Elève est titulaire d’un livret d’apprentissage conforme au contenu prévu par
+                                        l’arrêté du 29 juillet 2013. </li>
+                                </ol>
+                                Le livret d’apprentissage permet à l’Elève de connaître les objectifs de sa formation et
+                                de suivre sa progression, il précise l’ensemble des compétences à acquérir au cours de
+                                la formation.
+
+                                <ol class="circle">
+                                    <li>Si l’Elève opte pour un livret d’apprentissage au format papier, il s’engage à
+                                        se munir de celui-ci avant toute leçon et à le présenter en cas de contrôle
+                                        routier.</li>
+
+                                    <li>Si l’Elève opte pour le livret dématérialisé mis à sa disposition par Roule
+                                        Raoule dans son espace personnel, l’Elève déclare être en possession d’un
+                                        support numérique compatible à la lecture digitale dudit livret ;</li>
+
+                                    <li>L’Elève accepte de se soumettre à un contrôle d’identité de la part de
+                                        l’Enseignant préalablement à tout commencement de leçon et de remettre tout
+                                        document en relation avec la leçon sur simple demande de l’Enseignant, jugé
+                                        nécessaire au bon déroulement de la leçon.</li>
+                                </ol>
+                                Toute omission ou non-présentation de la part de l’Elève des documents requis entraînera
+                                un refus de la part de l’Enseignant de dispenser la leçon planifiée sans qu’aucun
+                                remboursement de la leçon soit possible sauf cas de force majeure ou motif légitime.
+
+                                <ol class="circle">
+                                    <li>L’Elève s’engage à ne pas se présenter à une leçon sous l’empire d’un état
+                                        alcoolique, sous l’emprise de stupéfiant ou encore, après avoir absorbé un
+                                        quelconque produit susceptible de provoquer des somnolences ou une diminution
+                                        des réflexes lors de la conduite. En cas de soupçons de la part de l’Enseignant,
+                                        il lui appartient, selon sa propre appréciation, de ne pas dispenser la leçon.
+                                        L’Elève pourra toutefois exposer ses réclamations à Roule Raoule.</li>
+                                </ol>
+
+                                <ins>Retards/Absences</ins>
+                                <br /> Une heure de conduite doit être décommandée 48 h à l’avance :
+
+                                <ol class="circle">
+                                    <li>En appelant le secrétariat (0183817171) pour le moment et message vocal, ce sera
+                                        l’heure à laquelle il a été laissé qui sera pris en compte,</li>
+                                    <li>Ou en se rendant sur son tableau de bord (quand l’agenda automatique sera
+                                        intégré),</li>
+                                </ol>
+                                Faute de quoi elle sera considérée comme effectuée.
+                                <br />
+                                <br /> En cas de retard de l’Elève au point de rendez-vous, l’Enseignant patiente
+                                jusqu’au terme de l’horaire prévu pour la leçon.
+                                <br />
+                                <br /> Le temps de la leçon est comptabilisé à compter de l’horaire initialement prévu
+                                et aucune adaptation, convenance ou correction de la plage horaire ne sera admise malgré
+                                le commencement tardif de la leçon.
+                                <br />
+                                <br /> Le défaut de présentation de l’Elève pendant toute la plage horaire de la leçon
+                                préalablement planifiée et validée entraîne le complet paiement de la leçon.
+                                <br />
+                                <br /> Les plannings, validations et annulations sont enregistrés par le système
+                                informatique de Roule Raoule.
+                                <br />
+                                <br /> De convention expresse entre l’Elève et Roule Raoule, seuls font foi entre les
+                                parties les informations reçues et émises par le système informatique de Roule Raoule.
+                                <br />
+                                <br /> Par exception à ce qui précède, l’Auto-Ecole permettra à l’Elève de reporter ou
+                                d’obtenir le remboursement de la séance qui ne serait pas tenue (ou le rattrapage des
+                                minutes de retard écoulées) en raison des motifs légitimes et sérieux invoqués par
+                                l’Auto-Ecole, l’Elève ou l’Enseignant (tels que les motifs d’ordre médical, la
+                                survenance d’un évènement grave et indépendant de la volonté des parties ou revêtant les
+                                caractéristiques de la force majeure).
+                                <br />
+                                <br /> L’Auto-Ecole se réserve également la possibilité d’annuler des séances dans tous
+                                les cas où la sécurité de l’Elève ne pourrait être garantie, notamment en raison d’un
+                                problème technique avec le véhicule utilisé par l’Enseignant et s’engage à prévenir
+                                l’Elève dans les meilleurs délais.
+                                <br />
+                                <br /> En tout état de cause, la partie empêchée devra notifier et justifier à l’autre,
+                                par écrit et dans les plus brefs délais, les motifs légitimes et sérieux à l’origine de
+                                son empêchement.
+                                <br />
+                                <br />
+
+                                <ins>Evaluation de départ</ins>
+                                <br />
+                                <br /> En application de l’Article L 213-2 du Code de la Route :
+                                <ol class="circle">
+                                    <li>L’Elève réalisera une évaluation dans la voiture louée par l’Auto-Ecole
+                                        préalablement à la souscription de son contrat de formation.
+                                </ol>
+                                Après avoir accepté son contrat de formation,
+                                <ol class="circle">
+                                    <li>l’Elève pourra procéder à la suite de sa formation. Chaque séance de formation
+                                        pratiquée donne lieu à une évaluation.</li>
+
+                                    <li>L’Auto-Ecole tient l’Elève informé de la progression de sa formation, notamment
+                                        par l’utilisation des supports de suivis, disponibles depuis un compte personnel
+                                        sur la plateforme. Si remboursement, un virement est émis sur la CB utilisée
+                                        lors du paiement. L’Elève est tenu de réaliser un minimum de 20 heures
+                                        d’enseignement de la conduite dont 15 heures au volant d’une voiture.</li>
+                                </ol>
+                                <ins>Appréciations et évaluations</ins>
+                                <br />
+                                <br /> L’enseignant remplit le livret d’apprentissage de l’Elève.
+                                <br />
+                                <br /> Les Elèves ayant suivi une leçon avec l’Enseignant ont la faculté d’évaluer et de
+                                commenter sur le Site la leçon dispensée.
+                                <br />
+                                <br /> Cette évaluation est remplie par l’Elève selon plusieurs critères, notamment sur
+                                les qualités pédagogiques d’enseignement de l’Enseignant, les moyens mis en œuvre pour
+                                l’apprentissage de la conduite automobile, la transmission des connaissances pratiques
+                                et théoriques de l’Enseignant, la propreté du véhicule ainsi qu’une appréciation
+                                générale correspondant au niveau de satisfaction de l’Elève. A ce titre, l’Elève
+                                autorise Roule Raoule à communiquer et publier sur le Site les commentaires et
+                                évaluations des Enseignants avec lesquels il a suivi une ou plusieurs leçons.
+                                <br />
+                                <br /> Roule Raoule se réserve le droit de publier les évaluations et commentaires sur
+                                le Site (ou toute autre plate-forme telle que détenue, gérée, contrôlée ou administrée
+                                par Roule Raoule.
+                                <br />
+                                <br /> Roule Raoule s’accorde le droit de supprimer tout commentaire à connotation
+                                diffamatoire et/ou injurieuse.
+                                </p>
+                                <p class="h3">Article 8 – Droit de Retractation</p>
+                                <p class="h4">8.1 Périmètre</p>
+                                <p class="text-justify">
+                                    Conformément à l’Article L 221.18 du Code de la Consommation, en tant que
+                                    consommateur (personne physique qui conclut une commande auprès de Roule Raoule en
+                                    agissant à des fins qui n’entrent pas dans le cadre de son activité commerciale,
+                                    industrielle, artisanale ou libérale) :
+                                <ol class="circle">
+                                    <li>Le Souscripteur bénéficie d’un délai de quatorze (14) jours calendaires pour
+                                        exercer son droit de rétractation légal ;</li>
+
+                                    <li>Le Souscripteur n’a pas à justifier de motifs pour exercer son droit de
+                                        rétractation.</li>
+                                </ol>
+                                Le délai court à compter de la conclusion du contrat.
+                                <br />
+                                <br /> Le Souscripteur sera alors remboursé de tout ou partie de sa commande dans un
+                                délai maximum de quatorze (14) jours après avoir été averti de l’annulation de sa
+                                commande.
+                                <br />
+                                <br /> Tout remboursement s’effectuera en fonction des moyens de paiement utilisés par
+                                le Souscripteur lors de sa souscription (carte bancaire).
+                                </p>
+                                <p class="h4">8.2 Exceptions</p>
+                                <p class="text-justify">
+                                    Conformément à l’Article L 221-28 du Code de la Consommation, il est rappelé que le
+                                    droit de rétractation ne peut pas être exercé pour les commandes portant sur :
+                                <ol class="circle">
+                                    <li>Les services pleinement exécutés avant la fin du délai de rétractation et dont
+                                        l’exécution a commencé après accord préalable exprès du consommateur et
+                                        renoncement exprès à son droit de rétractation.</li>
+                                </ol>
+                                </p>
+                                <p class="h3">Article 9 – Protection des donnees Personnelles</p>
+                                <p class="text-justify">
+                                    L’inscription au Site www.rouleraoule.fr implique l’acceptation des présentes
+                                    conditions générales d'utilisation.
+                                    <br /> Le traitement et la protection des données personnelles est détaillé dans la
+                                    « politique de confidentialité et de Protection de la Vie Privée – Cookies », annexe
+                                    des présentes conditions générales d'utilisation.
+                                    <br />
+                                    <br /> Il est ici rappelé que l’espace personnel de l’Elève sur le Site lui est
+                                    personnel. L’Elève est seul responsable de sa gestion et de son utilisation. Toute
+                                    connexion ou opération réalisée par l’Elève (ou s’il y a lieu, son représentant
+                                    légal) est sous sa responsabilité exclusive. L’Elève demeure l’unique responsable de
+                                    la protection du mot de passe qu’il utilise pour accéder à la plateforme du Site
+                                    ainsi que pour l’ensemble des actions nécessitant une authentification avec mot de
+                                    passe.
+                                    <br />
+                                    <br /> Roule Raoule recommande l’utilisation de mots de passe complexes pour une
+                                    protection optimale en combinant notamment des lettres majuscules et minuscules, des
+                                    chiffres et caractères spéciaux. Roule Raoule ne saurait être responsable d’un
+                                    quelconque dommage résultant d’un manquement de l’Elève à ce qui précède.
+                                    <br />
+                                    <br /> L’Elève s’engage à ne divulguer son identifiant et mot de passe. En cas
+                                    d’utilisation frauduleuse, Roule Raoule ne pourra en aucun cas être tenu pour
+                                    responsable.
+                                    <br />
+                                    <br /> En cas de perte de l’identifiant et du mot de passe ou d’utilisation non
+                                    autorisée, il incombe à l’Elève d’informer sans délai Roule Raoule. Sauf cas de
+                                    force majeure, bugs ou opération de maintenance programmée, les plateformes Web
+                                    dédiées à l’utilisation du Site fonctionnent 7 jours sur 7, 24 heures sur 24.
+                                </p>
+                                <p class="h4">9.1 Protection des données personnelles</p>
+                                <p class="text-justify">
+                                    Conformément à la Loi Informatique et Libertés du 6 janvier 1978, le Souscripteur
+                                    dispose d’un droit d’accès, de rectification et d’opposition sur les données le
+                                    concernant auprès de Roule Raoule. Le Souscripteur peut exercer ce droit en envoyant
+                                    un courrier à l’adresse suivante : Roule Raoule - 3 rue Jules Guesde – 91130
+                                    Ris-Orangis.
+                                    <br />
+                                    <br /> Ou bien par mail à : ola@rouleraoule.fr
+                                    <br /> L’Elève peut également consulter ou modifier ses données personnelles dans la
+                                    rubrique « Mon compte ».
+                                    <br />
+                                    <br /> Le traitement automatisé d’informations nominatives sur le site
+                                    www.rouleraoule.fr a été déclaré auprès de la Commission Nationale de l’Informatique
+                                    et des Libertés.
+                                    <br />
+                                    <br /> Tous les mails envoyés à l’Elève comportent un lien de désinscription en bas
+                                    de mail grâce auquel l’Elève peut se désabonner en un clic. (Si l’Elève souhaite
+                                    modifier ses préférences et les adapter en fonction de ses besoins, l’Elève peut
+                                    gérer à tout moment ses abonnements via son compte, rubrique « Mon compte – Mes
+                                    infos ».
+                                    <br />
+                                    <br /> Les données personnelles (adresse, e-mail et téléphone) peuvent être
+                                    transmises à des tiers à seule fin d’assurer le bon déroulement de la formation. La
+                                    société Roule Raoule est responsable de leur traitement.
+                                    <br />
+                                    <br /> Lesdites données personnelles peuvent également être transmises aux
+                                    partenaires commerciaux de Roule Raoule si l’Elève en a donné l’autorisation en
+                                    cochant la case correspondante. Bien entendu, l’Elève conserve la possibilité de
+                                    refuser, à posteriori, en manifestant son refus par courrier postal ou par mail aux
+                                    adresses indiquées ci-dessus.
+                                </p>
+                                <p class="h4">9.2 Cookies</p>
+                                <p class="text-justify">
+                                    Le Site Internet utilise des Cookies. Il s’agit de petits fichiers texte enregistrés
+                                    sur votre disque dur dont la plupart sont destinés à permettre ou à faciliter votre
+                                    navigation et sont nécessaires au fonctionnement de la plateforme en ligne.
+                                    <br />
+                                    <br /> Les données collectées sont destinées à l’usage de Roule Raoule. Elles sont
+                                    nécessaires au traitement et à la gestion des souscriptions et au bon déroulement de
+                                    la formation.
+                                    <br />
+                                    <br /> Elles permettent également à Roule Raoule de fournir des services
+                                    personnalisés et d’améliorer la pertinence des formations qui sont proposées.
+                                    <br />
+                                    <br /> L’utilisation de cookies, propres ou tiers, n’étant pas nécessaire au
+                                    fonctionnement du site nécessite un consentement exprès de la part des Elèves.
+                                    <br />
+                                    <br /> L’Elève peut manifester son consentement ou s’opposer à l’utilisation des
+                                    cookies en paramétrant son dispositif de connexion de manière appropriée. Pour cela
+                                    il peut se reporter notamment au guide d’utilisation de son navigateur.
+                                </p>
+                                <p class="h3">Article 10 – Propriéte Intellectuelle</p>
+                                <p class="text-justify">
+                                    L’inscription sur le Site, la souscription à un service d’apprentissage de la
+                                    conduite, théorique et/ou pratique, ou l’utilisation du site, n’emportent aucun
+                                    transfert au profit de l’Elève d’un quelconque droit de propriété intellectuelle ou
+                                    d’un quelconque droit matériel ou immatériel auquel l’Elève aurait accès à un titre
+                                    ou à un autre.
+                                    <br />
+                                    <br /> En cas de violation par l’Elève des droits de propriété intellectuelle de
+                                    Roule Raoule, cette dernière se réserve, par tous moyens mis à sa disposition, de
+                                    suspendre le compte électronique de l’Elève et, le cas échéant, d’interrompre toute
+                                    réservation de leçon et ce, sans préjudice d’une éventuelle action judiciaire pénale
+                                    ou civile.
+
+                                </p>
+                                <p class="h3">Article 11 – Limitation de Responsabilite</p>
+                                <p class="text-justify">
+                                    La responsabilité de Roule Raoule est strictement limitée à la fourniture des
+                                    services décrits dans le bon de souscription et les conditions générales
+                                    d'utilisation. L’Elève est seul responsable et autonome de son temps d’apprentissage
+                                    et de ses choix de rythmes et fréquences de la pratique de la conduite. Il est
+                                    également seul responsable des dépôts de dossier et des dates de passage aux
+                                    examens. La garantie consentie par Roule Raoule à l’Elève au titre de l’utilisation
+                                    du Site porte exclusivement sur l’adéquation et la pertinence des tests en ligne
+                                    ayant pour objet la préparation du Code de la Route, la réservation de leçon et la
+                                    mise en relation de l’Elève avec l’Enseignant en considération des informations
+                                    fournies par l’Elève. Roule Raoule ne saurait en aucune manière être tenu
+                                    responsable d’une erreur qui résulterait de la transmission d’éléments ou
+                                    d’informations erronés de l’Elève lors de l’utilisation du Site.
+                                    <br />
+                                    <br /> La responsabilité de Roule Raoule ne sera pas engagée et ne pourra pas être
+                                    recherchée par l’Elève pour tout dommage ou préjudice, financier, matériel ou
+                                    immatériel en cas de défaillance, d’interruption ou d’indisponibilité des moyens
+                                    d’accès au Site, Roule Raoule n’est tenue vis-à-vis de l’Elève à aucune obligation
+                                    en ce qui concerne sa réussite aux examens théorique et pratique qui relève des
+                                    seules compétences, capacités et niveau de préparation de l’Elève.
+                                </p>
+                                <p class="h3">Article 12 – Droit applicable – Juridiction competente – Litiges</p>
+                                <p class="text-justify">
+                                    Les présentes conditions générales d'utilisation sont soumises au droit français.
+                                    <br />
+                                    <br /> En cas de litige sur l’interprétation, l’exécution ou la validité des
+                                    présentes conditions générales d'utilisation, les Tribunaux français seront seuls
+                                    compétents.
+                                    <br />
+                                    <br /> En cas de litige, une solution amiable sera recherchée prioritairement à
+                                    toute action judiciaire.
+                                    <br />
+                                    <br /> Roule Raoule prie à cette fin l’Elève de bien vouloir contacter notre Service
+                                    Clients sur le Site de Roule Raoule en envoyant un e-mail via le formulaire de
+                                    contact ou à l’adresse électronique ola@rouleraoule.fr ou par téléphone depuis la
+                                    France au 01 83 81 71 71 (numéro non surtaxé au prix d’un appel local). Des
+                                    conseillers sont à votre disposition du lundi au vendredi de 9 heures à 12 heures et
+                                    de 14 heures à 19 heures et le samedi de 9 heures à 12 heures.
+                                    <br />
+                                    <br /> Conformément aux dispositions du Code de la Consommation concernant le
+                                    règlement amiable des litiges, Roule Raoule adhère au Service du Médiateur du
+                                    e_commerce de la FEVAD (Fédération du e-commerce et de la vente à distance) dont les
+                                    coordonnées sont les suivantes : 60 rue de la Boétie – 75008 Paris – <a
+                                        href="http://www.mediateurfevad.fr"
+                                        target="_blank">http://www.mediateurfevad.fr</a>. Après démarche préalable
+                                    écrite des consommateurs vis-à-vis de Roule Raoule. Le Service du Médiateur peut
+                                    être saisi pour tout litige de consommation dont le règlement n’aurait pas abouti.
+                                </p>
+                                <p class="h3">ANNEXE</p>
+                                <p class="h4">MODÈLE DE FORMULAIRE DE RÉTRACTATION</p>
+                                <p class="text-justify">
+                                    Veuillez compléter et renvoyer le présent formulaire par lettre postale ou par email
+                                    uniquement si vous souhaitez vous rétracter du contrat à l'adresse ci-dessous.)
+                                    <br />
+                                    <i><br /> DEMANDE DE RÉTRACTATION
+                                        <br />
+                                        <br /> A l'attention de la société Roule Raoule 3 rue Jules Guesde – 91130
+                                        Ris-orangis, adresse électronique : ola@rouelraoule.fr
+                                        <br />
+                                        <br /> Je vous notifie par la présente ma rétractation du contrat portant pour
+                                        la prestation de services ci-dessous :
+                                        <br />
+                                        <br /> Commandé le :
+                                        <br />
+                                        <br /> Nom du consommateur :
+                                        <br />
+                                        <br /> Adresse du consommateur :
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br /> Signature du consommateur (uniquement en cas de notification du présent
+                                        formulaire sur papier par lettre).
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br /> Date :</i>
+                                </p>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Mentions Légales -->
+                <div class="modal fade" id="ml">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <span class="h1 modal-title">Mentions légales</span>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <ol class="circle">
+                                    <li>Dénomination ou raison sociale : Raoule formation</li>
+                                    <li>Adresse du siège social : 3 rue Jules Guesdes 91130 RIS-ORANGIS</li>
+                                    <li>Numéro de téléphone : 0183817171</li>
+                                    <li>Directeur de publication : Nassim oularbi</li>
+                                    <li>Capital social : 500€</li>
+                                    <li>Numéro d’inscription au registre du commerce et des sociétés (RCS) ou au
+                                        répertoire des métiers : 830462859</li>
+                                    <li>Hébergement du site : OVH, SAS au capital de 100 690 20 € dont le siège social
+                                        est situé 2 rue Kellermann, immatriculée au RCS de Lille sous le n° 424 761 419
+                                        00045, n° de TVA FR 22424761419</li>
+                                    <li>Conditions générales de vente avec le délai de rétractation et de réclamation :
+                                        Voir CGU</li>
+                                    <li>Les conditions de remboursement : Voir CGU</li>
+                                </ol>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Charte de confidentialité -->
+
+                <div class="modal fade" id="cc">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <span class="h1 modal-title">Charte de confidentialité</span>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <p class="h1">Politique de Confidentialité et de Protection de la Vie Privée – Cookies
+                                </p>
+                                <p class="text-justify">
+                                    Bienvenue sur le Site www.rouleraoule.fr (ci-après le « Site) édité par Raoule
+                                    Formation.
+                                    <br />
+                                    <br /> Cette rubrique est consacrée à notre Politique de Confidentialité et de
+                                    Protection de la Vie Privée. Elle vous permet d’en savoir plus sur l’origine et
+                                    l’usage des informations de navigation traitées à l’occasion de votre consultation
+                                    de notre Site et sur vos droits. Cette politique est donc importante pour vous qui
+                                    souhaitez avoir une expérience positive et confiante de nos services et pour nous,
+                                    qui souhaitons répondre de manière précise et complète à vos questions sur votre
+                                    consultation de notre Site et tenir compte de vos souhaits.
+                                    <br />
+                                    <br /> Dans le cadre de cette politique, l’expression « Donnée(s) Personnelle(s) »
+                                    désigne les données qui se rapportent à vous seul(e) à un instant donné,
+                                    indépendamment du Terminal que vous utilisez. L’expression « Terminal(aux) désigne
+                                    l’équipement matériel (ordinateur, tablette, smartphone, téléphone, etc ) que vous
+                                    utilisez pour consulter ou voir s’afficher un site, une application, un contenu
+                                    publicitaire etc …Les expressions « information(s) de navigation » et « navigation »
+                                    désignent les informations qui se rapportent à la connexion d’un Terminal à un
+                                    service de communication électronique à un instant donné. L’expression « Cookie(s) »
+                                    désigne un fichier texte susceptible d’être enregistré, sous réserve de vos choix,
+                                    dans un espace dédié du disque dur de votre Terminal à l’occasion de la consultation
+                                    d’un service en ligne grâce à votre logiciel de navigation. Un fichier Cookie permet
+                                    à son émetteur d’identifier le Terminal dans lequel il est enregistré pendant la
+                                    durée de validité ou d’enregistrement du Cookie.
+
+                                </p>
+                                <p class="h3">1 Protection des données personnelles</p>
+                                <p class="text-justify">
+                                    La protection des données personnelles est une question de confiance et votre
+                                    confiance nous tient à cœur. Tout traitement des données personnelles vous
+                                    concernant est effectué dans le respect des dispositions légales applicables en la
+                                    matière. Nous souhaitons ci-après vous informer sur la manière dont nous recueillons
+                                    et utilisons vos données.
+                                    <br />
+                                    <br /> Roule Raoule est le responsable du traitement de vos données personnelles en
+                                    la personne de Monsieur Oularbi Nassim.
+
+                                </p>
+                                <p class="h4">1.1 Quelles sont les données collectées ?</p>
+                                <p class="text-justify">
+                                    Dans le cadre de l’exploitation du Site, la société Roule Raoule est susceptible de
+                                    collecter des données personnelles. Ces données sont traitées conformément aux
+                                    finalités prévues lors de la collecte. Elles sont stockées dans des conditions
+                                    visant à assurer leur sécurité et leur confidentialité.
+                                    <br />
+                                    <br /> Les données que nous pouvons collecter peuvent inclure vos données dites
+                                    personnelles en ce qu’elles permettent de vous identifier comme une personne
+                                    particulière. Nous collectons notamment vos nom, prénom, adresse, adresse mail, mot
+                                    de passe, historique de commandes, préférences et centres d’intérêts renseignés dans
+                                    l’espace « mes commandes », incidents de livraison et réclamations.
+                                    <br />
+                                    <br /> Certaines données récoltées ne nous permettent pas de vous identifier
+                                    directement, telles que vos informations de navigation. Nous ne savons pas
+                                    nécessairement quel terminal vous utilisez, ni qui vous êtes à un instant donné.
+                                    <br />
+                                    <br /> Ces informations de navigation concernent notamment l’adresse IP (Internet
+                                    Protocol) du Terminal connecté à Internet lors de la passation d’une commande, la
+                                    date et l’heure de la dernière connexion d’un Terminal à notre Site, l’URL de la
+                                    page Internet de provenance du Terminal accédant à notre Site, l’URL de la page
+                                    Internet accédée par le Terminal consultant notre Site, le type de système
+                                    d’exploitation utilisé par le Terminal, le type et la version du logiciel de
+                                    navigation utilisé par un Terminal, la langue d’utilisation du logiciel de
+                                    navigation utilisé par le Terminal, l’identifiant et le contenu d’un fichier cookie
+                                    stocké par nos soins dans le Terminal, le nombre de pages consultées, le nombre de
+                                    visites du Site.
+                                    <br />
+                                    <br /> Le caractère obligatoire ou facultatif des données vous est signalé lors de
+                                    la collecte par un astérisque.
+
+                                </p>
+                                <p class="h4">1.2 A quelles fins vos données sont-elles utilisées ?</p>
+                                <p class="text-justify">
+                                    Nous collectons vos données notamment quand vous créez votre compte, vous vous
+                                    inscrivez à la newsletter, vous effectuez une commande sur le Site, vous naviguez
+                                    sur le Site, vous participez à un jeu ou un concours, vous contactez le Service
+                                    Client.
+                                    <br />
+                                    <br /> En passant une commande sur le Site ou après avoir fourni vos données
+                                    personnelles sur le Site, vous pouvez être également informé des offres du Site sous
+                                    forme newsletters.
+                                    <br />
+                                    <br /> Si vous ne souhaitez plus recevoir ces propositions, vous pouvez nous en
+                                    informer à tout moment par courrier ou par e-mail (rubrique « contact » du Site ou
+                                    va le lien de désabonnement de votre compte client.
+
+                                </p>
+                                <p class="h4">1.3 A quelles fins vos données sont-elles utilisées ?</p>
+                                <p class="text-justify">
+                                    Les données collectées sont nécessaires à la gestion de votre commande et de nos
+                                    relations commerciales.
+                                    <br />
+                                    <br /> Les données sont utilisées par nos services internes pour le traitement de
+                                    votre commande pour lutter contre la fraude, pour personnaliser l’affichage du Site
+                                    en fonction de vos préférences.
+                                    <br />
+                                    <br /> Nous effectuons également des mesures d’audience grâce aux informations de
+                                    navigation et de connexion collectées.
+
+                                </p>
+                                <p class="h4">1.4 Vos données sont-elles partagées avec des tiers ?</p>
+                                <p class="text-justify">
+                                    Les données collectées par Roule Raoule sur le Site nous sont destinées. Nous
+                                    pouvons communiquer vos données à nos partenaires pour assurer l’accomplissement des
+                                    tâches nécessaires à l’exécution des commandes, assurer la livraison des biens et la
+                                    réalisation des prestations.
+
+                                </p>
+                                <p class="h4">1.5 Hébergement de vos données personnelles</p>
+                                <p class="text-justify">
+                                    Vos données personnelles ne sont stockées que sur des serveurs sécurisés situés en
+                                    France.
+
+                                </p>
+                                <p class="h4">1.6 Vos droits</p>
+                                <p class="text-justify">
+                                    Conformément à la loi Informatique et Libertés du 6 janvier 1978, vous disposez d’un
+                                    droit d’accès, de rectification et d’opposition sur les données vous concernant
+                                    auprès de Roule Raoule.
+                                    <br />
+                                    <br /> Vous pouvez exercer ce droit en nous envoyant un courrier à l’adresse
+                                    suivante ola@rouleraoule.fr.
+
+                                </p>
+                                <p class="h3">2 Sécurisation des paiements</p>
+                                <p class="text-justify">
+                                    Nous attachons une grande importance à ce que vos achats se passent dans les
+                                    meilleures conditions de sécurité possibles. A ce titre, vos transactions sont
+                                    confidentielles, cryptées et protégées grâce au protocole SSL (Secure Stockets
+                                    Layer).
+                                    <br />
+                                    <br /> Lors du paiement de votre commande par carte bancaire, la transaction se fait
+                                    entre vous et l’un de nos partenaires Monético Paiement, reconnus pour leur
+                                    fiabilité en matière de transaction sur Internet.
+
+                                </p>
+                                <p class="h4">2.1 Conservation du numéro de carte bancaire pour de prochains paiements
+                                </p>
+                                <p class="text-justify">
+                                    Par principe, Roule Raoule ne conserve pas vos coordonnées bancaires sur nos
+                                    serveurs. Vous devrez donc les rentrer à chaque commande dans les champs prévus à
+                                    cet effet lors de l’achat de votre commande. Cependant et seulement si vous nous
+                                    donnez votre accord, vos données bancaires peuvent être conservées de manière
+                                    sécurisée par les établissements bancaires sélectionnés par Roule Raoule afin d’être
+                                    utilisées lors de prochains paiements sur le Site. Pour ce faire, il vous suffit de
+                                    cocher la case « se souvenir de mes informations » au moment du paiement.
+                                    <br />
+                                    <br /> Vous pouvez à tout moment demander la suppression de votre carte bancaire
+                                    enregistrée sur le site :
+                                <ol class="circle">
+                                    <li>En vous rendant dans la rubrique « mes informations personnelles » puis « mes
+                                        cartes enregistrées » et en cliquant sur la petite croix,
+                                </ol>
+                                Ou
+                                <ol class="circle">
+                                    <li>En nous écrivant à l’adresse mail suivante : ola@rouleraoule.fr</li>
+                                </ol>
+                                </p>
+                                <p class="h4">2.2 Lutte contre la fraude</p>
+                                <p class="text-justify">
+                                    Roule Raoule fait appel à plusieurs mécanismes dans le cadre de la lutte contre la
+                                    fraude à la carte bancaire :
+                                <ol>
+                                    <li>Lorsque vous cliquez sur le bouton « valider » lors du passage de votre
+                                        commande, notre banque vérifie la validité du numéro de carte bancaire et
+                                        s’assure qu’elle n’est pas en opposition. Vous êtes ainsi doublement protégé
+                                        contre les abus et les fraudes ;</li>
+
+                                    <li>Notre Site utilise également un programme appelé « 3D Secure » ayant pour but de
+                                        lutter contre la fraude. Au moment du paiement en ligne, vous pouvez ainsi être
+                                        amené à vous identifier avant de finaliser la transaction (via une redirection
+                                        sur le site de votre banque, via la réception d’un SMS ou via des questions
+                                        personnelles type date de naissance, code postal …) ;</li>
+
+                                    <li>Enfin, nous avons mis en place un traitement interne de lutte contre la fraude à
+                                        la carte bancaire. Ainsi, nous pouvons effectuer des contrôles ayant pour but de
+                                        s’assurer de la réalité de votre identité et domiciliation. Dans ce cadre, nous
+                                        pourrons procéder à des vérifications portant sur les informations que vous nous
+                                        fournissez (telle que nom, prénom, adresse e-mail, adresse de livraison etc.)
+                                        ainsi que sur l’adresse IP utilisée, sur un historique de vos commandes et
+                                        transactions, sur les caractéristiques de la commande concernée et enfin, sur la
+                                        carte bancaire utilisée (type, pays d’émission et numéros partiels communiqués
+                                        par les établissements bancaires et de paiement composés uniquement des quatre
+                                        premiers chiffres et des deux derniers ainsi que de sa date d’expiration). Le
+                                        cas échéant, nous pouvons vous demander de nous transmettre par e-mail une copie
+                                        reco de votre pièce d’identité ainsi qu’un justificatif de domicile de moins de
+                                        trois (3) mois. Ces documents ne sont pas conservés au-delà de la durée
+                                        nécessaire aux vérifications et ne sont pas transmis à des tiers.</li>
+                                </ol>
+                                Roule Raoule se réserve le droit de procéder à l’annulation de la commande concernée et
+                                au blocage du compte. En cas de non réception des justificatifs demandés dans le délai
+                                imparti, Roule Raoule annulera la commande mais le Souscripteur sera informé de ce qui
+                                précède par e-mail.
+                                <br />
+                                <br /> Dans le cadre de ce traitement, nous vous rappelons que vous disposez de
+                                l’ensemble des droits listés à l’Article 1.6. ci-avant.
+
+                                </p>
+                                <p class="h3">3 Cookies</p>
+                                <p class="text-justify">
+                                    Lors de la consultation de notre Site, des informations relatives à la navigation de
+                                    votre Terminal (ordinateur, tablette, smartphone, etc.) sur notre Site, sont
+                                    susceptibles d’être enregistrées dans des fichiers « cookies » installés sur votre
+                                    Terminal, sous réserve des choix que vous auriez exprimés concernant les Cookies et
+                                    que vous pouvez modifier à tout moment.
+
+                                </p>
+                                <p class="h4">3.1 A quoi servent les Cookies émis sur notre Site ?</p>
+                                <p class="text-justify">
+                                    Seul l’émetteur d’un Cookie est susceptible de lire ou modifier des informations qui
+                                    y sont contenues.
+                                    <br />
+                                    <br /> (a) Les Cookies que nous émettons sur notre Site :
+                                    <br />
+                                    <br /> Lorsque vous vous connectez à notre Site, nous pouvons être amenés, sous
+                                    réserve de vos choix, à installer divers Cookies dans votre Terminal nous permettant
+                                    de reconnaître le navigateur de votre Terminal pendant la durée de validité du
+                                    Cookie concerné. Les Cookies que nous émettons sont utilisés aux fins décrites
+                                    ci-dessous, sous réserve de vos choix, qui résultent des paramètres de votre
+                                    logiciel de navigation utilisé lors de votre visite sur notre Site.
+                                    <br /> Les Cookies que nous émettons sur notre Site permettent :
+                                <ol class="circle">
+                                    <li>D’établir des statistiques et volumes de fréquentation et d’utilisation des
+                                        divers éléments composant notre Site (rubriques et contenus visités, parcours)
+                                        nous permettant d’améliorer l’intérêt et l’ergonomie de nos services ;</li>
+                                    <li>D’adapter la présentation de notre Site aux préférences d’affichage de votre
+                                        Terminal ;</li>
+                                    <li>De mémoriser des informations relatives à un formulaire que vous avez rempli sur
+                                        notre Site (inscription ou accès à votre compte) ou à des produits, services ou
+                                        informations que vous avez choisis sur notre Site (contenu d’un panier de
+                                        commande, etc.).</li>
+                                </ol>
+
+                                (b) Les Cookies émis par sur notre Site par des tiers : Du fait de l’utilisation
+                                d’applications tierces intégrées à notre Site, par exemple des applications des réseaux
+                                sociaux, certains Cookies peuvent être émis par d’autres entités que Roule Raoule.
+                                L’émission et l’utilisation de Cookies par des tiers sont soumises aux politiques de
+                                protection de la vie privée de ces tiers.
+                                <br />
+                                <br /> Nous vous informons de l’objet des Cookies dont nous avons connaissance et des
+                                moyens dont vous disposez pour effectuer des choix à l’égard de ces Cookies.
+                                <br />
+                                <br /> Certains Cookies sont émis par nos partenaires propriétaires de médias. Ces
+                                Cookies ne permettent pas de savoir qui vous êtes.
+                                <br />
+                                <br /> Ils collectent des informations anonymes et non personnelles qui ne sont pas
+                                liées à une quelconque information identifiable.
+                                <br />
+                                <br /> Les partenaires médias collectent et utilisent des données anonymes liées à votre
+                                historique de navigation afin d’afficher des publicités personnalisées. Ces Cookies
+                                permettent de mieux comprendre vos profils d’utilisateurs et d’adapter les annonces pour
+                                les rendre plus adaptées à vos besoins.
+                                <br />
+                                <br /> D’autres Cookies sont émis par Google Analytics. Nous utilisons Google Analytics
+                                pour recueillir des informations sur la façon dont vous naviguez sur notre Site.
+                                <br />
+                                <br /> Nous utilisons ces informations pour effectuer des mesures d’audience et nous
+                                aider à améliorer le Site.
+                                <br />
+                                <br /> Ces Cookies recueillent des informations sous forme anonyme, notamment le nombre
+                                de visiteurs sur le Site et les pages visitées.
+                                <br />
+                                <br /> Ces Cookies étant émis par des tiers, vous pouvez choisir d’utiliser leurs
+                                propres outils pour refuser leurs Cookies.
+                                <br />
+                                <br /> Nous sommes susceptibles d’inclure sur notre Site des applications informatiques
+                                émanant de tiers qui vous permettent de partager des contenus de notre Site avec
+                                d’autres personnes ou de faire connaître à ces autres personnes votre consultation ou
+                                votre opinion concernant un contenu de notre Site.
+                                <br />
+                                <br /> Tel est notamment le cas des boutons « Partager », « J’aime », issus de réseaux
+                                sociaux tels que Facebook, Twitter etc.
+                                <br />
+                                <br /> Le réseau social fournissant un tel bouton applicatif est susceptible de vous
+                                identifier grâce à ce bouton, même si vous n’avez pas utilisé ce bouton lors de votre
+                                consultation de notre Site.
+                                <br />
+                                <br /> En effet, ce type de bouton applicatif peut permettre au réseau social concerné
+                                de suivre votre navigation sur notre Site, du seul fait que votre compte au réseau
+                                social concerné était activé sur votre Terminal (session ouverte) durant votre
+                                navigation sur notre Site.
+                                <br />
+                                <br /> Nous n’avons aucun contrôle sur le processus employé par les réseaux sociaux pour
+                                collecter des informations relatives à votre navigation sur notre Site et associés aux
+                                données personnelles dont ils disposent.
+                                <br />
+                                <br /> Nous vous invitons à consulter les politiques de protection de la vie privée de
+                                ces réseaux sociaux afin de prendre connaissance des finalités d’utilisation, notamment
+                                publicitaires, des informations de navigation qu’ils peuvent recueillir grâce à ces
+                                boutons applicatifs.
+                                <br /> Ces politiques de protection doivent notamment vous permettre d’exercer vos choix
+                                auprès de ces réseaux sociaux, notamment en paramétrant vos comptes d’utilisation de
+                                chacun de ces réseaux.
+
+                                </p>
+                                <p class="h4">3.2 Vos choix concernant les Cookies</p>
+                                <p class="text-justify">
+                                    Tout paramétrage que vous pouvez entreprendre pour gérer les Cookies sera
+                                    susceptible de modifier votre navigation sur Internet et vos conditions d’accès à
+                                    certains services nécessitant l’utilisation de Cookies.
+                                    <br />
+                                    <br /> Vous pouvez faire le choix à tout moment d’exprimer et de modifier vos
+                                    souhaits en matière de Cookies par les moyens décrits ci-dessous.
+                                    <br />
+                                    <br /> Les choix qui vous sont offerts par votre logiciel de navigation : vous
+                                    pouvez configurer votre logiciel de navigation de manière à ce que des Cookies
+                                    soient enregistrés dans votre Terminal ou, au contraire, qu’ils soient rejetés soit
+                                    systématiquement, soit selon leur émetteur.
+                                    <br />
+                                    <br /> Vous pouvez également configurer votre logiciel de navigation de manière à ce
+                                    que l’acceptation ou le refus des Cookies vous soient proposés ponctuellement avant
+                                    qu’un Cookie soit susceptible d’être enregistré dans votre Terminal. Pour plus
+                                    d’informations, consultez la rubrique « Comment exercer vos choix selon le
+                                    navigateur que vous utilisez ? » ci-dessous.
+                                    <br />
+                                    <br />
+                                    <span class="text-muted pl-2">(a) L’accord sur les Cookies</span>
+                                    <br />
+                                    <br /> L’enregistrement d’un Cookie dans un Terminal est essentiellement subordonné
+                                    à la volonté de l’utilisateur du Terminal que celui-ci peut exprimer et modifier à
+                                    tout moment et gratuitement à travers les choix qui lui sont offerts par son
+                                    logiciel de navigation.
+                                    <br /> Si vous avez accepté dans votre logiciel de navigation l’enregistrement de
+                                    Cookies dans votre Terminal, les Cookies intégrés dans les pages et contenus que
+                                    vous avez consultés pourront être stockés temporairement dans un espace dédié dans
+                                    votre Terminal. Ils y seront lisibles uniquement par leur émetteur.
+                                    <br />
+                                    <span class="text-muted pl-2">(b) Le refus des Cookies</span>
+                                    <br />
+                                    <br /> Si vous refusez l’enregistrement des Cookies dans votre Terminal ou si vous
+                                    supprimez ceux qui y sont enregistrés, vous ne pourrez plus bénéficier d’un certain
+                                    nombre de fonctionnalités qui sont néanmoins nécessaires pour naviguer dans certains
+                                    espaces de notre Site.
+                                    <br /> Tel serait le cas si vous tentiez d’accéder à nos contenus ou services qui
+                                    nécessitent de vous identifier.
+                                    <br /> Tel serait également le cas lorsque nous, ou nos partenaires, ne pourrions
+                                    pas reconnaître à des fins de compatibilité technique, le type de navigateur utilisé
+                                    par votre Terminal, ses paramètres de langue et d’affichage ou le pays depuis lequel
+                                    votre Terminal semble connecté à Internet.
+                                    <br /> Le cas échéant, nous déclinons toute responsabilité pour les conséquences
+                                    liées au fonctionnement dégradé de nos services résultant de l’impossibilité pour
+                                    nous d’enregistrer ou de consulter les Cookies nécessaires à leur fonctionnement et
+                                    que vous auriez refusés ou supprimés.
+                                    <br />
+                                    <br />
+                                    <span class="text-muted pl-2">(c) Comment exercer vos choix selon le navigateur que
+                                        vous utilisez</span>
+                                    <br />
+                                    <br /> Pour la gestion des Cookies et de vos choix, la configuration de chaque
+                                    navigateur est différente. Elle est décrite dans le menu d’aide de votre navigateur
+                                    qui vous permettra de savoir de quelle manière modifier vos souhaits en matière de
+                                    Cookies.
+                                    <br />
+                                    <span class="text-muted pl-2">(d) Désactivation des Cookies tiers</span>
+                                    <br /> La désactivation des Cookies tiers permet de n’accepter que les Cookies
+                                    déposés par le Site Roule Raoule. Vous avez également la possibilité de les
+                                    désactiver, de les supprimer ou de les limiter grâce aux indications ci-dessous
+                                    (procédures différentes selon votre navigateur) :
+                                <ol class="circle">
+                                    <li>Chrome
+                                        <ol class="circle">
+                                            <li>Dans le menu Chrome, sélectionnez Paramètres ;</li>
+                                            <li>Cliquer sur Afficher les paramètres avancés ;</li>
+                                            <li>Se rendre dans le paragraphe Confidentialité ;</li>
+                                            <li>Cliquez sur l’onglet Paramètres de contenu ;</li>
+                                            <li>Dans le paragraphe Cookies (premier paragraphe) cocher la case Bloquer
+                                                les Cookies et les données du Site tiers ;</li>
+                                            <li>Enregistrer les modifications en cliquant sur OK</li>
+                                        </ol>
+                                    </li>
+                                    <li>Firefox
+                                        <ol class="circle">
+                                            <li>Sur la page d’accueil Firefox, cliquer sur l’onglet Paramètres ;</li>
+                                            <li>Sélectionner le tableau Vie privée ;</li>
+                                            <li>Dans la zone Historique, pour l’option Règles de conservation,
+                                                sélectionner Utiliser les paramètres personnalisés pour l’historique ;
+                                            </li>
+                                            <li>Sur la barre déroulante Accepter les Cookies tiers, sélectionner Jamais
+                                                ;</li>
+                                            <li>Enregistrer les modifications en cliquant sur OK</li>
+                                        </ol>
+                                    </li>
+                                    <li>Internet Explorer
+                                        <ol class="circle">
+                                            <li>Dans le menu Internet Explorer, allez dans Options Internet ;</li>
+                                            <li>Dans l’onglet Confidentialité, cliquer sur le bouton Avancé ;</li>
+                                            <li>Cocher la case Ignorer la gestion automatique des Cookies ;</li>
+                                            <li>Puis sélectionner Accepter pour les Cookies internes et Refuser les
+                                                Cookies tierce partie ;</li>
+                                            <li>Enregistrer les modifications en cliquant sur OK.</li>
+                                        </ol>
+                                    </li>
+                                    <li>Safari
+                                        <ol class="circle">
+                                            <li>Dans le menu de Safari, sélectionner Préférences ;</li>
+                                            <li>Aller sur l’onglet Sécurité ;</li>
+                                            <li>Au choix, Accepter les Cookies, sélectionner Provenant seulement des
+                                                Sites que je visite.</li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                                </p>
+                                <p class="h4">3.3 A quoi servent les Cookies accompagnant nos contenus publicitaires
+                                    diffusés par des tiers ?</p>
+                                <p class="text-justify">
+                                    Lorsque vous accédez à un Site/Application contenant des espaces publicitaires
+                                    diffusant une de nos annonces publicitaires, cette annonce est susceptible de
+                                    contenir un Cookie.
+                                    <br />
+                                    <br /> Ce Cookie est susceptible, sous réserve de vos choix, d’être enregistré dans
+                                    votre Terminal et de nous permettre de reconnaître le navigateur de votre Terminal
+                                    pendant la durée de validité du Cookie concerné.
+                                    <br />
+                                    <br /> Les Cookies intégrés à nos annonces publicitaires diffusées par des tiers
+                                    sont utilisés aux fins décrites ci-dessous, sous réserve de vos choix qui résultent
+                                    des paramètres de votre logiciel de navigation utilisé lors de votre visite de notre
+                                    Site que vous pouvez exprimer à tout moment.
+                                    <br />
+                                    <br /> Les Cookies que nous émettons nous permettent, si votre Terminal a permis
+                                    leur enregistrement, selon vos choix :
+                                <ol class="circle">
+                                    <li>De comptabiliser le nombre d’affichages et d’activations de nos contenus
+                                        publicitaires diffusés sur des sites/applications de tiers, d’identifier ces
+                                        contenus et ces sites/applications, de déterminer le nombre d’utilisateurs ayant
+                                        cliqué sur chaque contenu ;</li>
+                                    <li>De calculer les sommes dues aux acteurs de la chaîne de diffusion publicitaire
+                                        (agence de communication, régie publicitaire, site/support de diffusion) et
+                                        d’établir des statistiques ;</li>
+                                    <li>D’adapter la présentation du Site auquel mène un de nos contenus publicitaires,
+                                        selon les préférences d’affichage de votre Terminal (langue utilisée, résolution
+                                        d’affichage, système d’exploitation utilisé, etc ) lors de vos visites sur notre
+                                        Site et selon les matériels et les logiciels de visualisation ou de lecture que
+                                        votre Terminal comporte : selon les données de localisation (longitude et
+                                        latitude) qui nous sont transmises (ou à nos prestataires) par votre Terminal
+                                        avec votre accord préalable.</li>
+                                    <li>De suivre la navigation ultérieure effectuée par votre Terminal sur des
+                                        Sites/Applications ou sur d’autres contenus publicitaires.</li>
+                                </ol>
+                                </p>
+                                <p class="h4">3.4 Quel est l’intérêt de voir s’afficher des publicités adaptées à votre
+                                    navigation ?</p>
+                                <p class="text-justify">
+                                    Notre objectif est de vous présenter les publicités les plus pertinentes possibles.
+                                    A cette fin, la technologie des Cookies permet de déterminer en temps réel quelle
+                                    publicité afficher à un Terminal, en fonction de sa navigation récente sur un ou
+                                    plusieurs Sites ou Applications.
+                                </p>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    </section>
+
+</body>
+
+</html>
